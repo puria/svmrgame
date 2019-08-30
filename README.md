@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.dyne.org">
-    <img alt="svmreload" src="http://www.lascuolaopensource.xyz/content/2-xyz-exfadda/svmreload.jpg" width="150" />
+    <img alt="svmreload" src="http://www.lascuolaopensource.xyz/content/2-xyz-exfadda/svmreload.jpg" width="450" />
   </a>
 </p>
 
