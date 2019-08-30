@@ -1,3 +1,5 @@
+var numerodisatana = 666;
+
 var config = {
     type: Phaser.AUTO,
     width: 800,
