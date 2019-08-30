@@ -18,11 +18,13 @@ const config = {
 
 const settings = {
   velocity: 2000,
-  score: 0,
-  scoreMultiplier: 1.0
+  score: 1,
+  scoreMultiplier: 1.0,
+  scoreMessage: "",
 };
 
 const game = new Phaser.Game(config);
+let timedEvent;
 
 function preload() {
   this.load.image("player", "assets/images/puria.png");
@@ -36,6 +38,8 @@ function create() {
   platforms = this.physics.add.staticGroup();
   const villains = this.physics.add.group();
   this.physics.add.collider(player, villains);
+  settings.scoreMessage = this.add.text(20, 20, "PUNTI: " + settings.score, {fill: "#FFF"});
+  timedEvent = this.time.addEvent({ delay: 1000, callback: computeScore, callbackScope: this, loop: true });
 }
 
 function update() {
@@ -50,7 +54,8 @@ function update() {
 }
 
 function computeScore() {
-    settings.score += settings.score * settings.scoreMultiplier
+    settings.score += settings.scoreMultiplier
+    settings.scoreMessage.setText("PUNTI: " + settings.score);
 }
 
 function speedUpScoring(multiplier) {
@@ -59,8 +64,4 @@ function speedUpScoring(multiplier) {
 
 function slowDownScoring(multiplier) {
     settings.scoreMultiplier /= multiplier
-}
-
-function getScore() {
-    return settings.score
 }
