@@ -1,4 +1,3 @@
-var numerodisatana = 666;
 
 var config = {
     type: Phaser.AUTO,
@@ -20,11 +19,14 @@ var config = {
 
 const settings = {
     player: { 
-        size: 100
+        size: 100,
+        velocity: 2000
+
     }
 }
 
 var game = new Phaser.Game(config);
+var dir=0;
 
 function preload() {
     this.load.image("player", "assets/images/puria.png") //, { frameWidth: settings.player.size, frameHeight: settings.player.size })
@@ -38,11 +40,15 @@ function create() {
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
-    villain = this.physics.add.image(400, 450, 'villain');
+    // villain = this.physics.add.image(400, 450, 'villain');
     // villain.setBounce(0.2);
-    villain.setCollideWorldBounds(false);
+   // villain.set  CollideWorldBounds(false);
 
     platforms = this.physics.add.staticGroup();
+    const villains = this.physics.add.group();
+
+
+ /*
     villains = this.physics.add.group({
         key: 'villain',
         repeat: 11,
@@ -55,18 +61,33 @@ function create() {
 
     this.physics.add.collider(player, villain);
     this.physics.add.collider(player, villains);
+
+*/
+
 }
+
+
 
 function update() {
     if (cursors.left.isDown) {
-      player.setVelocityX(-160);
+    	dir=1;
     } else if (cursors.right.isDown) {
-      player.setVelocityX(160);
-    } else {
-      player.setVelocityX(0);
-    }
-    if (cursors.up.isDown && player.y === config.height - player.body.halfHeight) {
-        console.log(player)
-        player.setVelocityY(-200);
-    }
+      dir=-1;
+    } 
+
+       
+if (player.x === config.width - player.body.width)
+	{dir=0;}
+
+if(dir==1)
+{    player.setVelocityX(-settings.player.velocity);
+}
+else if(dir==-1)
+{player.setVelocityX(settings.player.velocity);}
+else 
+{player.setVelocityX(0);}
+
+
+
+    
 }
