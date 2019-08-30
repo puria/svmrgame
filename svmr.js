@@ -40,7 +40,6 @@ function create() {
 }
 
 function update() {
-  
   if (cursors.left.isDown) {
     player.setVelocityX(-settings.player.velocity);
   } else if (cursors.right.isDown) {
