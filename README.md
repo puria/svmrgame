@@ -37,16 +37,12 @@
 </h4>
 
 
-SANTU VITU MIA RELOADED È LA SECONDA PARTE DEL PROCESSO DI RIGENERAZIONE URBANA DELL’AMMINISTRAZIONE COMUNALE DI SAN VITO DEI NORMANNI E DI TUTTI I SUOI ABITANTI.
+:construction: SANTU VITU MIA RELOADED È LA SECONDA PARTE DEL PROCESSO DI RIGENERAZIONE URBANA DELL’AMMINISTRAZIONE COMUNALE DI SAN VITO DEI NORMANNI E DI TUTTI I SUOI ABITANTI.
 
 Il progetto intende la Rigenerazione Urbana non solo come rigenerazione fisica ma anche come Rigenerazione Umana di una comunità.
 
 L’OBIETTIVO È CREARE DEI DISPOSITIVI RELAZIONALI UTILI ALL’ATTIVAZIONE DELLA CITTADINANZA TUTTA PER LA RIVITALIZZAZIONE DELLO SPAZIO URBANO E L’INVERSIONE DEL TREND DI SPOPOLAMENTO DEL TERRITORIO, ATTRAVERSO UN UTILIZZO SOSTENIBILE, COLLABORATIVO E PARTECIPATO DI AREE DEGRADATE ED IMMOBILI PUBBLICI IN DISUSO.
 Santu Vitu Mia è quindi un progetto pilota volto a regolamentare gli strumenti normativi e creare un modello replicabile per la gestione partecipata dei beni comuni urbani.
-
-
-
-Abstract description like: :construction: Zenroom is a software in **ALPHA stage** and are part of the [DECODE project](https://decodeproject.eu) about data-ownership and [technological sovereignty](https://www.youtube.com/watch?v=RvBRbwBm_nQ). Our effort is that of improving people's awareness of how their data is processed by algorithms, as well facilitate the work of developers to create along [privacy by design principles](https://decodeproject.eu/publications/privacy-design-strategies-decode-architecture) using algorithms that can be deployed in any situation without any change.
 
 
 <details>
@@ -89,10 +85,6 @@ Copyright :copyright: 2019 by [XYZ lascuolaopensource](https://www.lascuolaopens
 Designed, written and maintained by **Y TEAM**.
 
 Special thanks to X and Z for their special contributions.
-
-<img src="https://zenroom.dyne.org/img/ec_logo.png" width="150" alt="Project funded by the European Commission">
-
-This project is receiving funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement nr. 732546 (DECODE).
 
 
 ***
