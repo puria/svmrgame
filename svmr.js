@@ -5,7 +5,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
+      gravity: { y: 100 },
       debug: false
     }
   },
@@ -19,7 +19,7 @@ const config = {
 const settings = {
   velocity: 2000,
   score: 1,
-  scoreMultiplier: 1.0,
+  scoreMultiplier: 1,
   scoreMessage: ""
 };
 
@@ -32,38 +32,43 @@ function preload() {
 }
 
 function create() {
-  cursors = this.input.keyboard.createCursorKeys();
-  player = this.physics.add.image(0, config.height, "player").setScale(0.6);
-  player.setCollideWorldBounds(true);
-  platforms = this.physics.add.staticGroup();
-  const villains = this.physics.add.group();
-  this.physics.add.collider(player, villains);
-  settings.scoreMessage = this.add.text(20, 20, "PUNTI: " + settings.score, {
-    fill: "#FFF"
-  });
-  timedEvent = this.time.addEvent({
-    delay: 1000,
-    callback: computeScore,
-    callbackScope: this,
-    loop: true
-  });
+  key = this.input.keyboard.createCursorKeys();
+  setupPlayers(this);
+  setupScoring(this);
 }
 
 function update() {
-  if (cursors.left.isDown) {
-    player.setVelocityX(-settings.velocity);
-  } else if (cursors.right.isDown) {
-    player.setVelocityX(settings.velocity);
-  } else if (
-    player.x === config.width - player.body.halfWidth ||
-    player.x === player.body.halfWidth
-  ) {
+  handleKeys();
+}
+
+function handleKeys() {
+  if (key.left.isDown) {
+    moveLeft(player);
+  } else if (key.right.isDown) {
+    moveRight(player);
+  } else if (isLeftBound(player) || isRightBound(player)) {
     player.setVelocityX(0);
   }
 }
 
+function isLeftBound(player) {
+  return player.x === config.width - player.body.halfWidth;
+}
+
+function isRightBound(player) {
+  return player.x === player.body.halfWidth;
+}
+
+function moveLeft(player) {
+  player.setVelocityX(-settings.velocity);
+}
+
+function moveRight(player) {
+  player.setVelocityX(settings.velocity);
+}
+
 function computeScore() {
-  settings.score += settings.scoreMultiplier;
+  settings.score += 1 * settings.scoreMultiplier;
   settings.scoreMessage.setText("PUNTI: " + settings.score);
 }
 
@@ -73,4 +78,23 @@ function speedUpScoring(multiplier) {
 
 function slowDownScoring(multiplier) {
   settings.scoreMultiplier /= multiplier;
+}
+
+function setupPlayers(game) {
+  player = game.physics.add.image(0, config.height, "player").setScale(0.6);
+  player.setCollideWorldBounds(true);
+  const villains = game.physics.add.group();
+  game.physics.add.collider(player, villains);
+}
+
+function setupScoring(game) {
+  settings.scoreMessage = game.add.text(20, 20, "PUNTI: " + settings.score, {
+    fill: "#FFF"
+  });
+  timedEvent = game.time.addEvent({
+    delay: 1000,
+    callback: computeScore,
+    callbackScope: game,
+    loop: true
+  });
 }
