@@ -83,8 +83,12 @@ function slowDownScoring(multiplier) {
 function setupPlayers(game) {
   player = game.physics.add.image(0, config.height, "player").setScale(0.6);
   player.setCollideWorldBounds(true);
-  const villains = game.physics.add.group();
-  game.physics.add.collider(player, villains);
+  var rightLine = new Phaser.Geom.Line(config.width, 0, config.width, config.height);
+  var leftLine = new Phaser.Geom.Line(0, 0, 0, config.height);
+  var rightVillains = game.add.group({ key: 'villain', frameQuantity: 4 });
+  var leftVillains = game.add.group({ key: 'villain', frameQuantity: 4 });
+  Phaser.Actions.RandomLine(rightVillains.getChildren(), rightLine);
+  Phaser.Actions.RandomLine(leftVillains.getChildren(), leftLine);
 }
 
 function setupScoring(game) {
