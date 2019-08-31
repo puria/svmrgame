@@ -6,7 +6,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 100 },
-      debug: false
+      debug: true
     }
   },
   scene: {
@@ -24,10 +24,10 @@ const settings = {
 };
 
 const game = new Phaser.Game(config);
+let villains;
 let timedEvent;
-var player = [];
-
-var numeroPiste = 3;
+let player = [];
+let lanes = 3;
 
 function preload() {
   this.load.image("player", "assets/images/ape.svg");
@@ -36,17 +36,27 @@ function preload() {
 
 function create() {
   key = this.input.keyboard.createCursorKeys();
-  for(i = 0; i < numeroPiste; i++){
-  setupPlayers(this, i);
-  setupInvisibles(this, i);
-  setupScoring(this, i);
+  for(i = 0; i < lanes; i++){
+    setupPlayers(this, i);
   }
+  setupVillains(this);
+  setupScoring(this);
 }
 
 function update() {
-  for(i = 0; i < numeroPiste; i++){
-  handleKeys(this,i);
-}
+  for(i = 0; i < lanes; i++){
+    handleKeys(this,i);
+    Phaser.Actions.IncY(villains.getChildren(), (1 * settings.score) / 8);
+
+    villains.children.iterate(function(v) {
+      if (v.y > config.height) {
+        villains.killAndHide(v);
+      }
+    });
+
+    this.physics.world.collide(player, villains);
+  }
+
 }
 
 function handleKeys(game, i) {
@@ -54,9 +64,6 @@ function handleKeys(game, i) {
  game.physics.arcade.moveToXY(player[i],500,0,0,3000);
  }
 }
-
-
-  
 
 function isLeftBound(player) {
   return player.x === config.width - player.body.halfWidth;
@@ -87,20 +94,44 @@ function slowDownScoring(multiplier) {
   settings.scoreMultiplier /= multiplier;
 }
 
-function setupPlayers(game,i) {
-  var sezioni = config.width/numeroPiste;
-  var rightLine = [];
-  var leftLine = [];
-  var rightVillains = [];
-  var leftVillains = [];
-  player[i] = game.physics.add.image(config.width/numeroPiste*i, config.height, "player").setScale(0.6);
+function setupPlayers(ctx, i) {
+  player[i] = ctx.physics.add.image(config.width/lanes*i, config.height, "player").setScale(0.6);
   player[i].setCollideWorldBounds(true);
-  leftLine[i] = new Phaser.Geom.Line(config.width/numeroPiste*i, 0, config.width/numeroPiste*i, config.height);
-  rightLine[i] = new Phaser.Geom.Line(config.width/numeroPiste*(i+1), 0, config.width/numeroPiste*(i+1), config.height);
-  rightVillains[i] = game.add.group({ key: 'villain', frameQuantity: 1 });
-  leftVillains[i] = game.add.group({ key: 'villain', frameQuantity: 1 });
-  Phaser.Actions.RandomLine(rightVillains[i].getChildren(), rightLine[i]);
-  Phaser.Actions.RandomLine(leftVillains[i].getChildren(), leftLine[i]);  
+}
+
+function setupVillains(ctx) {
+  villains = ctx.add.group({
+    defaultKey: "villain",
+    bounceX: 1,
+    bounceY: 1,
+    collideWorldBounds: true,
+    createCallback: function(villain) {
+      villain.setName("villain_" + this.getLength());
+    },
+    removeCallback: function(villain) {
+      console.log("Removed", villain.name);
+    }
+  });
+
+  ctx.time.addEvent({
+    delay: 100,
+    loop: true,
+    callback: addVillain,
+    callbackScope: ctx
+  });
+}
+
+function addVillain() {
+  var r = Math.floor(Math.random() * Math.floor(4));
+  var g = Math.floor(Math.random() * Math.floor(4));
+  var laneWidth = config.width/lanes;
+  var lanesX = [0, (r *laneWidth) - 10, (r * laneWidth) + 10, laneWidth];
+  var villain = villains.create(
+    lanesX[g],
+    Phaser.Math.Between(-5, 0) * 200
+  );
+  if (!villain) return;
+  villain.setActive(true).setVisible(true);
 }
 
 function setupScoring(game) {
