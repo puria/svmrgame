@@ -6,7 +6,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 100 },
-      debug: false
+      debug: true
     }
   },
   scene: {
@@ -24,7 +24,9 @@ const settings = {
 };
 
 const game = new Phaser.Game(config);
+let villains;
 let timedEvent;
+let player;
 
 function preload() {
   this.load.image("player", "assets/images/ape.svg");
@@ -39,6 +41,15 @@ function create() {
 
 function update() {
   handleKeys();
+  Phaser.Actions.IncY(villains.getChildren(), (1 * settings.score) / 8);
+
+  villains.children.iterate(function(v) {
+    if (v.y > config.height) {
+      villains.killAndHide(v);
+    }
+  });
+
+  this.physics.world.collide(player, villains);
 }
 
 function handleKeys() {
@@ -80,15 +91,40 @@ function slowDownScoring(multiplier) {
   settings.scoreMultiplier /= multiplier;
 }
 
-function setupPlayers(game) {
-  player = game.physics.add.image(0, config.height, "player").setScale(0.6);
+function setupPlayers(ctx) {
+  player = ctx.physics.add.image(0, config.height, "player").setScale(0.6);
   player.setCollideWorldBounds(true);
-  var rightLine = new Phaser.Geom.Line(config.width, 0, config.width, config.height);
-  var leftLine = new Phaser.Geom.Line(0, 0, 0, config.height);
-  var rightVillains = game.add.group({ key: 'villain', frameQuantity: 4 });
-  var leftVillains = game.add.group({ key: 'villain', frameQuantity: 4 });
-  Phaser.Actions.RandomLine(rightVillains.getChildren(), rightLine);
-  Phaser.Actions.RandomLine(leftVillains.getChildren(), leftLine);
+
+  villains = ctx.add.group({
+    defaultKey: "villain",
+    bounceX: 1,
+    bounceY: 1,
+    collideWorldBounds: true,
+    maxSize: 20,
+    createCallback: function(villain) {
+      villain.setName("alien" + this.getLength());
+    },
+    removeCallback: function(villain) {
+      console.log("Removed", villain.name);
+    }
+  });
+
+  ctx.time.addEvent({
+    delay: 1000,
+    loop: true,
+    callback: addVillain,
+    callbackScope: ctx
+  });
+}
+
+function addVillain() {
+  var villain = villains.create(
+    Math.random() <= 0.5 ? 0 : config.width,
+    Phaser.Math.Between(-5, 0) * 200
+  );
+  if (!villain) return; // None free
+  villain.setActive(true).setVisible(true);
+  this.physics.add.collider(player, villain);
 }
 
 function setupScoring(game) {
