@@ -26,7 +26,8 @@ const settings = {
 const game = new Phaser.Game(config);
 let villains;
 let timedEvent;
-let player;
+let player = [];
+let lanes = 3;
 
 function preload() {
   this.load.image("player", "assets/images/ape.svg");
@@ -35,31 +36,33 @@ function preload() {
 
 function create() {
   key = this.input.keyboard.createCursorKeys();
-  setupPlayers(this);
+  for(i = 0; i < lanes; i++){
+    setupPlayers(this, i);
+  }
+  setupVillains(this);
   setupScoring(this);
 }
 
 function update() {
-  handleKeys();
-  Phaser.Actions.IncY(villains.getChildren(), (1 * settings.score) / 8);
+  for(i = 0; i < lanes; i++){
+    handleKeys(this,i);
+    Phaser.Actions.IncY(villains.getChildren(), (1 * settings.score) / 8);
 
-  villains.children.iterate(function(v) {
-    if (v.y > config.height) {
-      villains.killAndHide(v);
-    }
-  });
+    villains.children.iterate(function(v) {
+      if (v.y > config.height) {
+        villains.killAndHide(v);
+      }
+    });
 
-  this.physics.world.collide(player, villains);
+    this.physics.world.collide(player, villains);
+  }
+
 }
 
-function handleKeys() {
-  if (key.left.isDown) {
-    moveLeft(player);
-  } else if (key.right.isDown) {
-    moveRight(player);
-  } else if (isLeftBound(player) || isRightBound(player)) {
-    player.setVelocityX(0);
-  }
+function handleKeys(game, i) {
+ if (key.left.isDown) {
+ game.physics.arcade.moveToXY(player[i],500,0,0,3000);
+ }
 }
 
 function isLeftBound(player) {
@@ -91,18 +94,19 @@ function slowDownScoring(multiplier) {
   settings.scoreMultiplier /= multiplier;
 }
 
-function setupPlayers(ctx) {
-  player = ctx.physics.add.image(0, config.height, "player").setScale(0.6);
-  player.setCollideWorldBounds(true);
+function setupPlayers(ctx, i) {
+  player[i] = ctx.physics.add.image(config.width/lanes*i, config.height, "player").setScale(0.6);
+  player[i].setCollideWorldBounds(true);
+}
 
+function setupVillains(ctx) {
   villains = ctx.add.group({
     defaultKey: "villain",
     bounceX: 1,
     bounceY: 1,
     collideWorldBounds: true,
-    maxSize: 20,
     createCallback: function(villain) {
-      villain.setName("alien" + this.getLength());
+      villain.setName("villain_" + this.getLength());
     },
     removeCallback: function(villain) {
       console.log("Removed", villain.name);
@@ -110,7 +114,7 @@ function setupPlayers(ctx) {
   });
 
   ctx.time.addEvent({
-    delay: 1000,
+    delay: 100,
     loop: true,
     callback: addVillain,
     callbackScope: ctx
@@ -118,20 +122,23 @@ function setupPlayers(ctx) {
 }
 
 function addVillain() {
+  var r = Math.floor(Math.random() * Math.floor(4));
+  var g = Math.floor(Math.random() * Math.floor(4));
+  var laneWidth = config.width/lanes;
+  var lanesX = [0, (r *laneWidth) - 10, (r * laneWidth) + 10, laneWidth];
   var villain = villains.create(
-    Math.random() <= 0.5 ? 0 : config.width,
+    lanesX[g],
     Phaser.Math.Between(-5, 0) * 200
   );
-  if (!villain) return; // None free
+  if (!villain) return;
   villain.setActive(true).setVisible(true);
-  this.physics.add.collider(player, villain);
 }
 
 function setupScoring(game) {
   settings.scoreMessage = game.add.text(20, 20, "PUNTI: " + settings.score, {
     fill: "#FFF"
-  });
-  timedEvent = game.time.addEvent({
+   });
+   timedEvent = game.time.addEvent({
     delay: 1000,
     callback: computeScore,
     callbackScope: game,
