@@ -7,10 +7,14 @@ const settings = {
   scoreMessage: ""
 };
 
-let villains;
+let villains0;
+
+let villains1;
+var platforms;
+let villains2;
 let key;
 let player = [];
-let lanes = 1;
+let lanes = 5;
 
 class MainScene extends Phaser.Scene {
   constructor() {
@@ -20,11 +24,14 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.svg('ape', '../assets/images/sprites-ape.svg', { width: 240, height: 120 });
     this.load.spritesheet("player", "ape", {
       frameWidth: 80,
       frameHeight: 120
     });
-    this.load.svg("villain0", 'villain0');
+
+
+
   }
 
   create() {
@@ -35,20 +42,56 @@ class MainScene extends Phaser.Scene {
     }
     this.setupVillains(this);
     this.setupScoring(this);
+
+
+platforms = this.physics.add.staticGroup();
+var i;
+var k;
+var widthlane;
+widthlane = WIDTH/lanes;
+
+
+for(k=0;k<=lanes;k++)
+{
+for(i=0; i<= HEIGHT/80; i++)
+{platforms.create(widthlane*k+10, 80*i, 'wall1');
+platforms.create(widthlane*(k+1)-10, 80*i, 'wall2');}
+}
+
   }
 
   update() {
     for (var i = 0; i < lanes; i++) {
       this.handleKeys(this, i);
-      Phaser.Actions.IncY(villains.getChildren(), (1 * settings.score) / 8);
+      Phaser.Actions.IncY(villains0.getChildren(), (1 * settings.score) / 8);
+            Phaser.Actions.IncY(villains1.getChildren(), (1 * settings.score) / 8);
+                  Phaser.Actions.IncY(villains2.getChildren(), (1 * settings.score) / 8);
 
-      villains.children.iterate(function(v) {
+      villains0.children.iterate(function(v) {
         if (v.y > HEIGHT) {
-          villains.killAndHide(v);
+          villains0.killAndHide(v);
         }
       });
 
-      this.physics.world.collide(player, villains);
+   villains1.children.iterate(function(v) {
+        if (v.y > HEIGHT) {
+          villains1.killAndHide(v);
+        }
+      });
+
+   villains2.children.iterate(function(v) {
+        if (v.y > HEIGHT) {
+          villains2.killAndHide(v);
+        }
+      });
+
+
+
+      this.physics.world.collide(player, villains0);
+      this.physics.world.collide(player, villains1);
+      this.physics.world.collide(player, villains2);
+
+
     }
   }
 
@@ -109,19 +152,23 @@ class MainScene extends Phaser.Scene {
   }
 
   setupVillains(ctx) {
-    villains = ctx.add.group(
+    villains0 = ctx.add.group(
       {
         defaultKey: "villain0"
-      }
-      // , {
-      //   defaultKey: "villain1"
-      // }, {
-      //   defaultKey: "villain2"
-      // }]
-    );
+      } );
+
+    villains1 = ctx.add.group(
+      {
+        defaultKey: "villain1"
+      } );
+
+    villains2 = ctx.add.group(
+      {
+        defaultKey: "villain2"
+      } );
 
     ctx.time.addEvent({
-      delay: 100,
+      delay: 500,
       loop: true,
       callback: this.addVillain,
       callbackScope: ctx
@@ -129,17 +176,34 @@ class MainScene extends Phaser.Scene {
   }
 
   addVillain() {
-    var r = Math.floor(Math.random() * Math.floor(4));
-    var g = Math.floor(Math.random() * Math.floor(4));
+    var b= Math.floor(Math.random() * 2);
+    var g = Math.floor(Math.random() * lanes);
+    var v = Math.floor(Math.random() * 3);
+
     var laneWidth = WIDTH / lanes;
-    var lanesX = [0, r * laneWidth, laneWidth];
-    var villain = villains.create(lanesX[g], Phaser.Math.Between(-5, 0) * 200);
-    if (!villain) return;
-    villain
-      .setActive(true)
-      .setVisible(true)
-      .setScale(0.5);
+
+    var allvillains = [villains0,villains1,villains2];
+    
+    var villain = allvillains[v].create(0,-20);
+
+if(b==1)
+{    villain.setScale(1/lanes);
+
+  villain.x =  laneWidth*g+ 20 + villain.width/(2*lanes);}
+  else
+  {    villain.setScale(-1/lanes);
+
+    villain.x =  laneWidth*(g+1)  -20- villain.width/(2*lanes);}
+    
   }
+
+  //villain.setScale(-1);
+
+
+    //if (!villain) return;
+         // .setActive(true)
+     // .setVisible(true)
+  
 
   setupScoring(game) {
     settings.scoreMessage = game.add.text(20, 20, "PUNTI: " + settings.score, {
