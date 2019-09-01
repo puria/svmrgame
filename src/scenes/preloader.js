@@ -75,8 +75,8 @@ class Preloader extends Phaser.Scene {
     //start loading
     this.load.svg('background', background, { width: WIDTH, height: HEIGHT });
     this.load.svg("villain0", villain0, { width: 160, height: 80 });
-    this.load.svg("villain1", villain1, { width: 320, height: 80 });
-    this.load.svg("villain2", villain2, { width: 160, height: 80 });
+    this.load.svg("villain1", villain1, { width: 160, height: 80 });
+    this.load.svg("villain2", villain2, { width: 320, height: 80 });
     this.load.svg('wall1', wall1, { width: 20, height: 80 });
     this.load.svg('wall2', wall2, { width: 20, height: 80 });
     this.load.audio("bump",   [bumpmp3, bumpogg])
