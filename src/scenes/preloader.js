@@ -94,7 +94,7 @@ class Preloader extends Phaser.Scene {
   initRegistry() {
     //the game registry provides a place accessible by all scenes to set and get data.
     //Here we store our key that tells the LevelScene what map to load.
-    this.registry.set("newGame", true);
+    this.registry.set("gameOver", false);
     this.registry.set("score", 1);
   }
 }

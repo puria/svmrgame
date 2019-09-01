@@ -15,7 +15,7 @@ var platforms;
 let villains2;
 let key;
 let player = [];
-let lanes = 2;
+let lanes = 1;
 
 class MainScene extends Phaser.Scene {
   constructor() {
@@ -31,6 +31,7 @@ class MainScene extends Phaser.Scene {
     });
     this.load.svg("villain0", "villain0");
     this.sfxbump = this.sound.add("bump");
+    this.sfxvecchia = this.sound.add("crash0")
     this.sound.add("music").play();
   }
 
@@ -51,8 +52,8 @@ class MainScene extends Phaser.Scene {
 
     for (k = 0; k <= lanes; k++) {
       for (i = 0; i <= HEIGHT / 80; i++) {
-        platforms.create(widthlane * k + 10, 80 * i, "wall1");
-        platforms.create(widthlane * (k + 1) - 10, 80 * i, "wall2");
+        platforms.create(widthlane * k + 10, 80 * i, "wall1").setImmovable();
+        platforms.create(widthlane * (k + 1) - 10, 80 * i, "wall2").setImmovable();
       }
     }
   }
@@ -81,11 +82,17 @@ class MainScene extends Phaser.Scene {
           villains2.killAndHide(v);
         }
       });
-
       this.physics.world.collide(player, villains0);
       this.physics.world.collide(player, villains1);
       this.physics.world.collide(player, villains2);
+
     }
+  }
+
+  hitVecchia() {
+    this.physics.pause();
+    this.sfxvecchia.play()
+    this.registry.set("gameOver", true);
   }
 
   handleKeys(game, i) {
@@ -143,7 +150,7 @@ class MainScene extends Phaser.Scene {
       duration: 500
     });
     player[i] = ctx.physics.add.sprite((WIDTH / lanes) * i, HEIGHT, "player");
-    player[i].setCollideWorldBounds(true);
+    player[i].setBounce(1).setCollideWorldBounds(true);
   }
 
   setupVillains(ctx) {
@@ -165,6 +172,7 @@ class MainScene extends Phaser.Scene {
       callback: this.addVillain,
       callbackScope: ctx
     });
+    this.physics.world.enable([ villains0, villains1, villains2 ]);
   }
 
   addVillain() {
@@ -187,6 +195,10 @@ class MainScene extends Phaser.Scene {
 
       villain.x = laneWidth * (g + 1) - 20 - villainScale * villain.width / (2 * lanes);
     }
+    // this.physics.world.collide(player, villains0)
+    this.physics.add.collider(player, villains0)
+    this.physics.world.collide(player, villains0)
+    this.physics.add.collider(player, villain, this.hitVecchia, null, this);
   }
 
   //villain.setScale(-1);
