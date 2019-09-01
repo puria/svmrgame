@@ -19,11 +19,17 @@ class Preloader extends Phaser.Scene {
       20
     );
     this.progress = this.add.graphics();
+    this.text = this.add.text()
+
 
     //pass loading progress as value to loading bar and redraw as files load
     this.load.on(
       "progress",
       function(value) {
+        this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
+        if (!value) {
+          this.text.setText(" ")
+        }
         this.progress.clear();
         this.progress.fillStyle(0xfff6d3, 1);
         this.progress.fillRect(
@@ -47,7 +53,11 @@ class Preloader extends Phaser.Scene {
     );
 
     //start loading
-    this.load.pack("Preload", "src/assets/pack.json", "Preload");
+    for (var i = 0; i < 500; i++) {
+      this.load.pack("Preload", "src/assets/pack.json", "Preload");
+      this.load.image('testloading'+i, 'src/assets/logo.png');
+    }
+
   }
 
   create() {

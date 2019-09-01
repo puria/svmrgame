@@ -148,7 +148,8 @@ class MainScene extends Phaser.Scene {
 
   setupScoring(game) {
     settings.scoreMessage = game.add.text(20, 20, "PUNTI: " + settings.score, {
-      fill: "#FFF"
+      fill: "#FFF",
+      font:"28px Stonewall50"
     });
     game.time.addEvent({
       delay: 1000,
