@@ -1,6 +1,24 @@
 // https://github.com/B3L7/phaser3-tilemap-pack
 
 import {WIDTH, HEIGHT} from '../constants'
+import background from "../assets/images/background.svg"
+import villain0 from "../assets/images/nonna.svg"
+import villain1 from "../assets/images/tree.svg"
+import villain2 from "../assets/images/torre.svg"
+import wall1 from "../assets/images/wall1.svg"
+import wall2 from "../assets/images/wall2.svg"
+import bumpmp3 from "../assets/sounds/rimbalzo.mp3"
+import bumpogg from "../assets/sounds/rimbalzo.ogg"
+
+import crash0mp3 from "../assets/sounds/urloVecchia.mp3"
+import crash0ogg from "../assets/sounds/urloVecchia.ogg"
+import crash2mp3 from "../assets/sounds/torreCheCade.mp3"
+import crash2ogg from "../assets/sounds/torreCheCade.ogg"
+import crash1mp3 from "../assets/sounds/treeCrash.mp3"
+import crash1ogg from "../assets/sounds/treeCrash.ogg"
+
+import musicmp3 from "../assets/sounds/svmrcore.mp3"
+import musicogg from "../assets/sounds/svmrcore.ogg"
 
 class Preloader extends Phaser.Scene {
   constructor() {
@@ -22,10 +40,6 @@ class Preloader extends Phaser.Scene {
     );
     this.progress = this.add.graphics();
     this.text = this.add.text()
-    this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
-    this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
-    this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
-
 
     //pass loading progress as value to loading bar and redraw as files load
     this.load.on(
@@ -33,6 +47,8 @@ class Preloader extends Phaser.Scene {
       function(value) {
         if (!value) {
           this.text.setText(" ")
+        } else if (value == 1) {
+          this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
         }
         this.progress.clear();
         this.progress.fillStyle(0xfff6d3, 1);
@@ -57,17 +73,17 @@ class Preloader extends Phaser.Scene {
     );
 
     //start loading
-    this.load.svg('background', 'src/assets/images/background.svg', { width: WIDTH, height: HEIGHT });
-    this.load.svg("villain0", 'src/assets/images/nonna.svg', { width: 160, height: 80 });
-    this.load.svg("villain1", 'src/assets/images/torre.svg', { width: 320, height: 80 });
-    this.load.svg("villain2", 'src/assets/images/tree.svg', { width: 160, height: 80 });
-    this.load.svg('wall1', 'src/assets/images/wall1.svg', { width: 20, height: 80 });
-    this.load.svg('wall2', 'src/assets/images/wall2.svg', { width: 20, height: 80 });
-    this.load.audio("bump",   ["src/assets/sounds/rimbalzo.mp3",     "src/assets/sounds/rimbalzo.ogg"])
-    this.load.audio("crash0", ["src/assets/sounds/urloVecchia.mp3",  "src/assets/sounds/urloVecchia.ogg"])
-    this.load.audio("crash1", ["src/assets/sounds/torreCheCade.mp3", "src/assets/sounds/torreCheCade.ogg"])
-    this.load.audio("crash2", ["src/assets/sounds/treeCrash.mp3",    "src/assets/sounds/treeCrash.ogg"])
-    this.load.audio("music",  ["src/assets/sounds/svmrcore.mp3",     "src/assets/sounds/svmrcore.ogg"])
+    this.load.svg('background', background, { width: WIDTH, height: HEIGHT });
+    this.load.svg("villain0", villain0, { width: 160, height: 80 });
+    this.load.svg("villain1", villain1, { width: 320, height: 80 });
+    this.load.svg("villain2", villain2, { width: 160, height: 80 });
+    this.load.svg('wall1', wall1, { width: 20, height: 80 });
+    this.load.svg('wall2', wall2, { width: 20, height: 80 });
+    this.load.audio("bump",   [bumpmp3, bumpogg])
+    this.load.audio("crash0", [crash0mp3, crash0ogg])
+    this.load.audio("crash1", [crash1mp3, crash1ogg])
+    this.load.audio("crash2", [crash2mp3, crash2ogg])
+    this.load.audio("music",  [musicmp3, musicogg])
   }
 
   create() {
