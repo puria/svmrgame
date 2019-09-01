@@ -64,9 +64,6 @@ class MainScene extends Phaser.Scene {
   update() {
     for (var i = 0; i < lanes; i++) {
       this.handleKeys(this, i);
-      Phaser.Actions.IncY(villains0.getChildren(), (1 * settings.score) / 8);
-      Phaser.Actions.IncY(villains1.getChildren(), (1 * settings.score) / 8);
-      Phaser.Actions.IncY(villains2.getChildren(), (1 * settings.score) / 8);
 
       villains0.children.iterate(function(v) {
         if (v.y > HEIGHT) {
@@ -161,17 +158,9 @@ class MainScene extends Phaser.Scene {
   }
 
   setupVillains(ctx) {
-    villains0 = ctx.add.group({
-      defaultKey: "villain0"
-    });
-
-    villains1 = ctx.add.group({
-      defaultKey: "villain1"
-    });
-
-    villains2 = ctx.add.group({
-      defaultKey: "villain2"
-    });
+    villains0 = ctx.add.group({ defaultKey: "villain0" });
+    villains1 = ctx.add.group({ defaultKey: "villain1" });
+    villains2 = ctx.add.group({ defaultKey: "villain2" });
 
     ctx.time.addEvent({
       delay: 1000,
@@ -200,7 +189,6 @@ class MainScene extends Phaser.Scene {
         laneWidth * (g + 1) - 20 - (villainScale * villain.width) / (2 * lanes);
     }
 
-    // this.physics.world.collide(player, villains0)
     this.physics.world.enable(villain);
     this.physics.add.collider(player, villain, this.hitVecchia, null, this);
   }
