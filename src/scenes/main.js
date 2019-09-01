@@ -56,6 +56,7 @@ class MainScene extends Phaser.Scene {
         platforms.create(widthlane * (k + 1) - 10, 80 * i, "wall2").setImmovable();
       }
     }
+    this.physics.add.collider(player, platforms);
   }
 
   update() {
@@ -96,9 +97,9 @@ class MainScene extends Phaser.Scene {
   }
 
   handleKeys(game, i) {
-    if (key.left.isDown && WIDTH - player[i].body.halfWidth - player[i].x < 1) {
+    if (key.left.isDown && Math.abs(WIDTH/lanes - player[i].body.halfWidth - player[i].x -20) < 1) {
       this.moveLeft(player[i]);
-    } else if (key.right.isDown && player[i].x - player[i].body.halfWidth < 1) {
+    } else if (key.right.isDown && Math.abs(-20+player[i].x - player[i].body.halfWidth) < 1) {
       this.moveRight(player[i]);
     } else if (this.isLeftBound(player[i]) || this.isRightBound(player[i])) {
       player[i].setVelocityX(0);
@@ -106,11 +107,11 @@ class MainScene extends Phaser.Scene {
   }
 
   isLeftBound(player) {
-    return player.x === WIDTH - player.body.halfWidth;
+    return player.x === player.body.halfWidth+20;
   }
 
   isRightBound(player) {
-    return player.x === player.body.halfWidth;
+    return player.x === WIDTH/lanes - player.body.halfWidth-20;
   }
 
   moveLeft(player) {
@@ -150,7 +151,9 @@ class MainScene extends Phaser.Scene {
       duration: 500
     });
     player[i] = ctx.physics.add.sprite((WIDTH / lanes) * i, HEIGHT, "player");
-    player[i].setBounce(1).setCollideWorldBounds(true);
+    player[i].x= (WIDTH / lanes) * i+ player[i].width/(2*lanes)+20;
+    player[i].setScale(1/lanes);
+    player[i].setCollideWorldBounds(true);
   }
 
   setupVillains(ctx) {
