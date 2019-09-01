@@ -15,7 +15,7 @@ var platforms;
 let villains2;
 let key;
 let player = [];
-let lanes = 3;
+let lanes = 2;
 
 class MainScene extends Phaser.Scene {
   constructor() {
