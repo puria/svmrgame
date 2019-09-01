@@ -57,18 +57,17 @@ class Preloader extends Phaser.Scene {
     );
 
     //start loading
-    for (var i = 0; i < 5; i++) {
-      // this.load.spritesheet('playButton', 'src/assets/images/play.svg');
-      this.load.svg('background', 'src/assets/images/background.svg', { width: WIDTH, height: HEIGHT });
-     // this.load.svg('ape', 'src/assets/images/sprites-ape.svg', { width: 80, height: 120 });
-      this.load.svg("villain0", 'src/assets/images/nonna.svg', { width: 160, height: 80 });
-     this.load.svg("villain1", 'src/assets/images/torre.svg', { width: 320, height: 80 });
-      this.load.svg("villain2", 'src/assets/images/tree.svg', { width: 160, height: 80 });
-           this.load.svg('wall1', 'src/assets/images/wall1.svg', { width: 20, height: 80 });
-                      this.load.svg('wall2', 'src/assets/images/wall2.svg', { width: 20, height: 80 });
-
-    }
-
+    this.load.svg('background', 'src/assets/images/background.svg', { width: WIDTH, height: HEIGHT });
+    this.load.svg("villain0", 'src/assets/images/nonna.svg', { width: 160, height: 80 });
+    this.load.svg("villain1", 'src/assets/images/torre.svg', { width: 320, height: 80 });
+    this.load.svg("villain2", 'src/assets/images/tree.svg', { width: 160, height: 80 });
+    this.load.svg('wall1', 'src/assets/images/wall1.svg', { width: 20, height: 80 });
+    this.load.svg('wall2', 'src/assets/images/wall2.svg', { width: 20, height: 80 });
+    this.load.audio("bump",   ["src/assets/sounds/rimbalzo.mp3",     "src/assets/sounds/rimbalzo.ogg"])
+    this.load.audio("crash0", ["src/assets/sounds/urloVecchia.mp3",  "src/assets/sounds/urloVecchia.ogg"])
+    this.load.audio("crash1", ["src/assets/sounds/torreCheCade.mp3", "src/assets/sounds/torreCheCade.ogg"])
+    this.load.audio("crash2", ["src/assets/sounds/treeCrash.mp3",    "src/assets/sounds/treeCrash.ogg"])
+    this.load.audio("music",  ["src/assets/sounds/svmrcore.mp3",     "src/assets/sounds/svmrcore.ogg"])
   }
 
   create() {
