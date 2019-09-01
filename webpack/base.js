@@ -20,8 +20,26 @@ module.exports = {
         use: "raw-loader"
       },
       {
-        test: /\.(gif|png|jpe?g|svg|xml|json)$/i,
-        use: "file-loader"
+        test: /\.(gif|png|jpe?g|svg|xml)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              path: "dist/src/assets/font/"
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff|woff2|otf)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              path: "dist/src/assets/font/"
+            }
+          }
+        ]
       }
     ]
   },
