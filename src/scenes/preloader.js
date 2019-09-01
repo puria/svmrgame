@@ -1,5 +1,7 @@
 // https://github.com/B3L7/phaser3-tilemap-pack
 
+import {WIDTH, HEIGHT} from '../constants'
+
 class Preloader extends Phaser.Scene {
   constructor() {
     super({
@@ -20,13 +22,15 @@ class Preloader extends Phaser.Scene {
     );
     this.progress = this.add.graphics();
     this.text = this.add.text()
+    this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
+    this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
+    this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
 
 
     //pass loading progress as value to loading bar and redraw as files load
     this.load.on(
       "progress",
       function(value) {
-        this.text = this.add.text(50, 50, "Ciao sanvitese \nStiamo caricando il gioco \nSantu Vitu Mia ReLoaded", {font:"28px Stonewall50", fill:"#FFFFFF"})
         if (!value) {
           this.text.setText(" ")
         }
@@ -53,9 +57,11 @@ class Preloader extends Phaser.Scene {
     );
 
     //start loading
-    for (var i = 0; i < 500; i++) {
-      this.load.pack("Preload", "src/assets/pack.json", "Preload");
-      this.load.image('testloading'+i, 'src/assets/logo.png');
+    for (var i = 0; i < 5; i++) {
+      // this.load.spritesheet('playButton', 'src/assets/images/play.svg');
+      this.load.svg('background', 'src/assets/images/background.svg', { width: WIDTH, height: HEIGHT });
+      this.load.svg('ape', 'src/assets/images/sprites-ape.svg', { width: 80, height: 120 });
+      this.load.svg("villain0", 'src/assets/images/nonna.svg', { width: 160, height: 80 });
     }
 
   }

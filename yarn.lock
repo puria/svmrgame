@@ -638,6 +638,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@koreez/phaser3-ninepatch@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@koreez/phaser3-ninepatch/-/phaser3-ninepatch-2.0.1.tgz#f5cc944923525bfe970e82a8694b992c22a5f9fa"
+  integrity sha512-sG0yiMdzbbLI3FLOoiopRCaHosD7Le3cpUE6F6o+FWQldzH6y0nyJ4gPbtIzIq6mdMR/Oo9UZ4UTeN0RVeBA/g==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"

@@ -1,8 +1,4 @@
 import { HEIGHT, WIDTH } from "../constants";
-import ape from "../assets/images/sprites-ape.svg";
-import obstacle1 from "../assets/images/nonna.svg";
-import obstacle2 from "../assets/images/tree.svg";
-import obstacle3 from "../assets/images/torre.svg";
 
 const settings = {
   velocity: 1000,
@@ -24,17 +20,16 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet("player", ape, {
+    this.load.spritesheet("player", "ape", {
       frameWidth: 80,
       frameHeight: 120
     });
-    this.load.svg("villain0", obstacle1);
-    this.load.svg("villain1", obstacle2);
-    this.load.svg("villain2", obstacle3);
+    this.load.svg("villain0", 'villain0');
   }
 
   create() {
     key = this.input.keyboard.createCursorKeys();
+    this.add.image(0, 0, 'background').setOrigin(0);
     for (var i = 0; i < lanes; i++) {
       this.setupPlayers(this, i);
     }
