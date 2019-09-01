@@ -89,6 +89,7 @@ class MainScene extends Phaser.Scene {
     this.physics.pause();
     this.sfxvecchia.play();
     this.registry.set("gameOver", true);
+    this.scene.start("GameOver");
   }
 
   handleKeys(game, i) {

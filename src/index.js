@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import {HEIGHT, WIDTH, GRAVITY} from "./constants"
 import MainScene from './scenes/main'
 import Preloader from "./scenes/preloader"
+import GameOver from "./scenes/game_over"
 
 
 const config = {
@@ -15,7 +16,7 @@ const config = {
       debug: true
     }
   },
-  scene: [Preloader, MainScene]
+  scene: [Preloader, MainScene, GameOver]
 };
 
 window.game = new Phaser.Game(config);

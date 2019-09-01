@@ -20,6 +20,7 @@ import crash1ogg from "../assets/sounds/treeCrash.ogg"
 import musicmp3 from "../assets/sounds/svmrcore.mp3"
 import musicogg from "../assets/sounds/svmrcore.ogg"
 
+
 class Preloader extends Phaser.Scene {
   constructor() {
     super({
