@@ -1,3 +1,9 @@
+import Phaser from "phaser";
+import ape from "./assets/images/sprites-ape.svg"
+import obstacle1 from "./assets/images/nonna.svg"
+import obstacle2 from "./assets/images/tree.svg"
+import obstacle3 from "./assets/images/torre.svg"
+
 const config = {
   type: Phaser.AUTO,
   width: 480,
@@ -31,18 +37,18 @@ let player = [];
 let lanes = 1;
 
 function preload() {
-  this.load.spritesheet("player", "assets/images/sprites-ape.svg", {
+  this.load.spritesheet("player", ape, {
     frameWidth: 80,
     frameHeight: 120
   });
-  this.load.svg("villain0", "assets/images/nonna.svg");
-  this.load.svg("villain1", "assets/images/tree.svg");
-  this.load.svg("villain2", "assets/images/torre.svg");
+  this.load.svg("villain0", obstacle1);
+  this.load.svg("villain1", obstacle2);
+  this.load.svg("villain2", obstacle3);
 }
 
 function create() {
   key = this.input.keyboard.createCursorKeys();
-  for (i = 0; i < lanes; i++) {
+  for (var i = 0; i < lanes; i++) {
     setupPlayers(this, i);
   }
   setupVillains(this);
@@ -50,7 +56,7 @@ function create() {
 }
 
 function update() {
-  for (i = 0; i < lanes; i++) {
+  for (var i = 0; i < lanes; i++) {
     handleKeys(this, i);
     Phaser.Actions.IncY(villains.getChildren(), (1 * settings.score) / 8);
 
