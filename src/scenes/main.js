@@ -1,5 +1,4 @@
-import Phaser from "phaser";
-import {HEIGHT, WIDTH} from "../constants"
+import { HEIGHT, WIDTH } from "../constants";
 import ape from "../assets/images/sprites-ape.svg";
 import obstacle1 from "../assets/images/nonna.svg";
 import obstacle2 from "../assets/images/tree.svg";
@@ -18,6 +17,12 @@ let player = [];
 let lanes = 1;
 
 class MainScene extends Phaser.Scene {
+  constructor() {
+    super({
+      key: "MainScene"
+    });
+  }
+
   preload() {
     this.load.spritesheet("player", ape, {
       frameWidth: 80,
@@ -53,10 +58,7 @@ class MainScene extends Phaser.Scene {
   }
 
   handleKeys(game, i) {
-    if (
-      key.left.isDown &&
-      WIDTH - player[i].body.halfWidth - player[i].x < 1
-    ) {
+    if (key.left.isDown && WIDTH - player[i].body.halfWidth - player[i].x < 1) {
       this.moveLeft(player[i]);
     } else if (key.right.isDown && player[i].x - player[i].body.halfWidth < 1) {
       this.moveRight(player[i]);
@@ -157,4 +159,4 @@ class MainScene extends Phaser.Scene {
   }
 }
 
-export default MainScene
+export default MainScene;

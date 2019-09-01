@@ -1,11 +1,8 @@
 import Phaser from "phaser";
 import {HEIGHT, WIDTH, GRAVITY} from "./constants"
-import * as scenes from './scenes'
+import MainScene from './scenes/main'
+import Preloader from "./scenes/preloader"
 
-let scene = [];
-for (let i in scenes) {
-  scene.push(scenes[i]);
-}
 
 const config = {
   type: Phaser.AUTO,
@@ -18,7 +15,7 @@ const config = {
       debug: true
     }
   },
-  scene
+  scene: [Preloader, MainScene]
 };
 
 window.game = new Phaser.Game(config);
