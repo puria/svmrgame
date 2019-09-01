@@ -16,6 +16,8 @@ import crash2mp3 from "../assets/sounds/torreCheCade.mp3"
 import crash2ogg from "../assets/sounds/torreCheCade.ogg"
 import crash1mp3 from "../assets/sounds/treeCrash.mp3"
 import crash1ogg from "../assets/sounds/treeCrash.ogg"
+import winogg from "../assets/sounds/win.ogg"
+import winmp3 from "../assets/sounds/win.mp3"
 
 import musicmp3 from "../assets/sounds/svmrcore.mp3"
 import musicogg from "../assets/sounds/svmrcore.ogg"
@@ -30,7 +32,7 @@ class Preloader extends Phaser.Scene {
 
   preload() {
     //create a background and prepare loading bar
-    this.cameras.main.setBackgroundColor(0x2a0503);
+    this.cameras.main.setBackgroundColor("#24334e");
     this.fullBar = this.add.graphics();
     this.fullBar.fillStyle(0xda7a34, 1);
     this.fullBar.fillRect(
@@ -85,6 +87,7 @@ class Preloader extends Phaser.Scene {
     this.load.audio("crash1", [crash1mp3, crash1ogg])
     this.load.audio("crash2", [crash2mp3, crash2ogg])
     this.load.audio("music",  [musicmp3, musicogg])
+    this.load.audio("win",  [winmp3, winogg])
   }
 
   create() {

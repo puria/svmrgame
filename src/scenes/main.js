@@ -25,6 +25,7 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
+    settings.score = this.registry.get('score')
     this.load.spritesheet("player", ape, {
       frameWidth: 100,
       frameHeight: 150
@@ -32,7 +33,8 @@ class MainScene extends Phaser.Scene {
     this.load.svg("villain0", "villain0");
     this.sfxbump = this.sound.add("bump");
     this.sfxvecchia = this.sound.add("crash0");
-    this.sound.add("music").play();
+    this.sfxmusic = this.sound.add("music")
+    this.sfxmusic.play();
   }
 
   create() {
@@ -87,8 +89,10 @@ class MainScene extends Phaser.Scene {
 
   hitVecchia() {
     this.physics.pause();
+    this.sfxmusic.stop();
     this.sfxvecchia.play();
     this.registry.set("gameOver", true);
+    this.registry.set("score", settings.score)
     this.scene.start("GameOver");
   }
 
@@ -180,12 +184,12 @@ class MainScene extends Phaser.Scene {
     var allvillains = [villains0, villains1, villains2];
     var villain = allvillains[v].create(0, -20);
 
+    villain.setScale(villainScale / lanes);
     if (b == 1) {
-      villain.setScale(villainScale / lanes);
       villain.x =
         laneWidth * g + 20 + (villainScale * villain.width) / (2 * lanes);
     } else {
-      villain.setScale(-villainScale / lanes);
+      villain.angle = 180;
       villain.x =
         laneWidth * (g + 1) - 20 - (villainScale * villain.width) / (2 * lanes);
     }
@@ -193,12 +197,6 @@ class MainScene extends Phaser.Scene {
     this.physics.world.enable(villain);
     this.physics.add.collider(player, villain, this.hitVecchia, null, this);
   }
-
-  //villain.setScale(-1);
-
-  //if (!villain) return;
-  // .setActive(true)
-  // .setVisible(true)
 
   setupScoring(game) {
     settings.scoreMessage = game.add.text(20, 20, "PUNTI: " + settings.score, {
