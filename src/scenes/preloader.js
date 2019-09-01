@@ -57,10 +57,9 @@ class Preloader extends Phaser.Scene {
     );
 
     //start loading
-    for (var i = 0; i < 5; i++) {
-      // this.load.spritesheet('playButton', 'src/assets/images/play.svg');
+    for (var i = 0; i < 500; i++) {
+      this.load.image('logo'+i, 'src/assets/logo.png');
       this.load.svg('background', 'src/assets/images/background.svg', { width: WIDTH, height: HEIGHT });
-      this.load.svg('ape', 'src/assets/images/sprites-ape.svg', { width: 80, height: 120 });
       this.load.svg("villain0", 'src/assets/images/nonna.svg', { width: 160, height: 80 });
     }
 

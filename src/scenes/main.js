@@ -20,6 +20,7 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.svg('ape', '../assets/images/sprites-ape.svg', { width: 240, height: 120 });
     this.load.spritesheet("player", "ape", {
       frameWidth: 80,
       frameHeight: 120
