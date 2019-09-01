@@ -1,4 +1,5 @@
 import { HEIGHT, WIDTH } from "../constants";
+import ape from "../assets/images/sprites-ape.svg"
 
 const settings = {
   velocity: 1000,
@@ -20,12 +21,13 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.svg('ape', '../assets/images/sprites-ape.svg', { width: 240, height: 120 });
-    this.load.spritesheet("player", "ape", {
-      frameWidth: 80,
-      frameHeight: 120
+    this.load.spritesheet("player", ape, {
+      frameWidth: 100,
+      frameHeight: 150
     });
     this.load.svg("villain0", 'villain0');
+    this.sfxbump = this.sound.add('bump')
+    this.sound.add('music').play();
   }
 
   create() {
@@ -74,11 +76,13 @@ class MainScene extends Phaser.Scene {
   moveLeft(player) {
     player.setVelocityX(-settings.velocity);
     player.anims.play("left", true);
+    this.sfxbump.play()
   }
 
   moveRight(player) {
     player.setVelocityX(settings.velocity);
     player.anims.play("right", true);
+    this.sfxbump.play()
   }
 
   computeScore() {

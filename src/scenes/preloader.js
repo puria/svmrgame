@@ -57,11 +57,13 @@ class Preloader extends Phaser.Scene {
     );
 
     //start loading
-    for (var i = 0; i < 500; i++) {
-      this.load.image('logo'+i, 'src/assets/logo.png');
       this.load.svg('background', 'src/assets/images/background.svg', { width: WIDTH, height: HEIGHT });
       this.load.svg("villain0", 'src/assets/images/nonna.svg', { width: 160, height: 80 });
-    }
+      this.load.audio("bump",   ["src/assets/sounds/rimbalzo.mp3",     "src/assets/sounds/rimbalzo.ogg"])
+      this.load.audio("crash0", ["src/assets/sounds/urloVecchia.mp3",  "src/assets/sounds/urloVecchia.ogg"])
+      this.load.audio("crash1", ["src/assets/sounds/torreCheCade.mp3", "src/assets/sounds/torreCheCade.ogg"])
+      this.load.audio("crash2", ["src/assets/sounds/treeCrash.mp3",    "src/assets/sounds/treeCrash.ogg"])
+      this.load.audio("music",  ["src/assets/sounds/svmrcore.mp3",     "src/assets/sounds/svmrcore.ogg"])
 
   }
 
