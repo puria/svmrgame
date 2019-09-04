@@ -133,6 +133,10 @@ class MainScene extends Phaser.Scene {
   }
 
   computeScore() {
+    if (settings.score > 8) {
+		this.scene.start("GameOver");
+        this.registry.set("gameOver", false);
+	}
     settings.score += 1 * settings.scoreMultiplier;
     settings.scoreMessage.setText("PUNTI: " + settings.score);
   }
