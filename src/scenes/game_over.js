@@ -22,7 +22,11 @@ export default class GameOver extends Phaser.Scene {
   Solo alla terza sai come si mette
   in via Garibaldi al 107
 	`
-	var qa_lose = `RIPROVA`
+	var qa_lose = `'nci stava na vota
+  nu sorgi e na malota
+  che facevano gira e vota.
+  Cce te lu conto n'atra vota?
+  scioca arretu ccu truevi la nota`
 	var qa = this.registry.get('gameOver') ? qa_lose : qa_win
     this.text = this.add.text(this.cameras.main.width / 2,
                               this.cameras.main.height / 4 + 64,

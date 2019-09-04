@@ -92,7 +92,7 @@ class MainScene extends Phaser.Scene {
     this.sfxmusic.stop();
     this.sfxvecchia.play();
     this.registry.set("gameOver", true);
-    this.registry.set("score", settings.score)
+    this.registry.set("score", 1)
     this.scene.start("GameOver");
   }
 
@@ -133,7 +133,7 @@ class MainScene extends Phaser.Scene {
   }
 
   computeScore() {
-    if (settings.score > 8) {
+    if (settings.score > 80) {
 		this.scene.start("GameOver");
         this.registry.set("gameOver", false);
 	}
