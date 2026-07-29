@@ -4,7 +4,7 @@
   "description": "Il giochino di SOS per Santa Vitu mia reloaded",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack --config webpack/prod.js ",
+    "build": "webpack --config webpack/prod.js",
     "start": "webpack-dev-server --config webpack/base.js --open --host 0.0.0.0"
   },
   "repository": {

@@ -1,0 +1,11 @@
+[tools]
+node = "22"
+
+[tasks.build]
+run = "./node_modules/.bin/webpack --config webpack/prod.js"
+
+[tasks.start]
+run = "./node_modules/.bin/webpack-dev-server --config webpack/base.js --open --host 0.0.0.0"
+
+[env]
+NODE_OPTIONS = "--openssl-legacy-provider"
